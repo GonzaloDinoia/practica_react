@@ -1,8 +1,9 @@
 import Cards from "./Cards";
 import DataCards from "./DataCards";
-const CardsContainer = () => {
+
+const CardsGenerator = () => {
   return (
-    <div className="cards-container">
+    <div className="mt-24 flex justify-center flex-wrap">
   {DataCards.map((e) => {
     let imglibro;
     if(e.stock < 10 ){
@@ -18,4 +19,4 @@ const CardsContainer = () => {
   )
 }
 
-export default CardsContainer
+export default CardsGenerator

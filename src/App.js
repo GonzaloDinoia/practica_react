@@ -1,13 +1,13 @@
 import './components/styles.css';
-import CardsContainer from "./components/CardsContainer";
+import CardsGenerator from "./components/CardsGenerator";
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <>
-    <div class="title-section">
-    <h2>Tienda de libros</h2>
-</div>
-<CardsContainer/>
+    <Navbar/>
+ 
+<CardsGenerator/>
   
   </>
   
