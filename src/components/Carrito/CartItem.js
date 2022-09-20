@@ -1,6 +1,19 @@
 //item carrito
 const CartItem = ({ data, deleteFromCart, addToCart }) => {
-  const { id, img, title, author, price, quantity } = data;
+  const { id, img, title, author, price, quantity,stock } = data;
+  
+  let buttontype;
+  let actividad;
+  if (stock > 10) {
+    buttontype="opacity-100 cursor-pointer"
+    actividad=false
+    
+    
+  } else {
+    buttontype="opacity-50 cursor-not-allowed"
+    actividad=true
+   
+  }
   let subtotal = quantity * price;
 
   return (
@@ -14,6 +27,7 @@ const CartItem = ({ data, deleteFromCart, addToCart }) => {
           <div className="flex flex-col items-center justify-center md:w-60 md:items-start ">
             <h2 className="font-ftitles text-xl font-bold mb-1">{title}</h2>
             <p className="font-ftext">{author}</p>
+            <p className="font-ftext">Disponibles: {stock}</p>
           </div>
           <div className="hidden md:flex flex-col items-center justify-center md:flex-none">
             <h2 className="font-ftitles text-xl font-bold mb-1">
@@ -27,7 +41,7 @@ const CartItem = ({ data, deleteFromCart, addToCart }) => {
             </h2>
             <div className="flex items-center">
               <button
-                onClick={() => deleteFromCart(id)}
+                onClick={() => deleteFromCart(id) }
                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-2.5 rounded-l"
               >
                 -
@@ -35,7 +49,7 @@ const CartItem = ({ data, deleteFromCart, addToCart }) => {
               <p className="p-1 font-ftext text-xl text-center">{quantity}</p>
               <button
                 onClick={() => addToCart(id)}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-2 rounded-r"
+                className={`bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold px-2 rounded-r ${buttontype}`}  disabled={actividad}
               >
                 +
               </button>

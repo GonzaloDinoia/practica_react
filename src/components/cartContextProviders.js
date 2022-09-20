@@ -11,42 +11,67 @@ function reducer(state, action) {
         (product) => product.id === action.payload
       );
 
-      let itemInCart = state.cart.find((item) => item.id === newItem.id);
+     let itemInCart = state.cart.find((item) => item.id === newItem.id);
+
+        let DescuentaStock=(newItem.stock= newItem.stock-1)
 
       return itemInCart
         ? {
             ...state,
+            DescuentaStock,
             cart: state.cart.map((item) =>
               item.id === newItem.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: item.quantity + 1, stock: item.stock-1 }
                 : item
             ),
           }
         : {
-            ...state,
-            cart: [...state.cart, { ...newItem, quantity: 1 }],
+                      ...state,
+                      DescuentaStock,
+            cart: [...state.cart, { ...newItem, quantity: 1}],
           };
     }
     case TYPES.REMOVE_ONE_PRODUCT: {
+      let producto = state.products.find(
+        (producto) => producto.id === action.payload
+      );
       let itemToDelete = state.cart.find((item) => item.id === action.payload);
+      let RecuperaStock=(producto.stock=producto.stock+1)
+     
       return itemToDelete.quantity > 1
         ? {
-            ...state,
+                      ...state,
+                      RecuperaStock,
             cart: state.cart.map((item) =>
               item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
+                ? { ...item, quantity: item.quantity - 1, stock: item.stock + 1 }
                 : item
             ),
           }
         : {
+
             ...state,
+            RecuperaStock,
+                       
             cart: state.cart.filter((item) => item.id !== action.payload),
           };
     }
     case TYPES.REMOVE_ALL_PRODUCTS: {
+      let itemStock= state.cart.find((item) => item.id === action.payload);
+      let producto = state.products.find(
+        (producto) => producto.id === action.payload
+      );
+
+     let RecuperaStock=(producto.stock=producto.stock+itemStock.quantity)
+      // let RecuperaStock=state.products.map((producto)=>
+      //itemStock.id===producto.id?producto.stock=Number(producto.stock)+Number(itemStock.quantity):null
+        //    )
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
+        RecuperaStock,
+
+                cart: state.cart.filter((item) => item.id !== action.payload),
+                
       };
     }
 
@@ -68,7 +93,7 @@ export const Proveedor = ({ children }) => {
       },
       {
         id: 2,
-        stock: 12,
+        stock: 11,
         img:"https://contentv2.tap-commerce.com/cover/large/9789506445386_1.jpg",
         title: "La Sangre Manda",
         author: "Stephen King",
